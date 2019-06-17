@@ -1,0 +1,19 @@
+{
+    "name": "rxjs-practice",
+    "version": "6.5.2",
+    "main": "index.js",
+    "license": "MIT",  
+    "scripts": {
+      "start": "webpack-dev-server --mode development"
+    },
+    "dependencies": {
+        "rxjs": "^6.5.2",
+        "ts-loader": "^6.0.2",
+        "typescript": "3.5.2",
+        "webpack": "3.34.0",
+        "webpack-dev-server": "^3.7.1"
+    },
+    "devDependencies": {
+        "webpack-cli": "^3.3.4"
+    }
+}
