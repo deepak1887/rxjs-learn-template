@@ -1,50 +1,35 @@
-import { Observable, fromEvent, observable } from 'rxjs';
-import * as data from '../server/data';
-var counter = 0;
+import { Subject } from 'rxjs';
 
-var observable1 = Observable.create((observer: any)=>{
-    data.allBooks.forEach(book=> { observer.next(book.title)});
-    observer.complete('process complete');
-    //observer.complete('process complete');
-    //observer.next(data.allBooks.map(x=>x.author))
-});
+var subject = new Subject();
 
-var observable2 = new Observable((observer: any)=>{
-    observer.next('hello')
-});
+subject.subscribe(
+    data => addItem('observer 1: ' + data),
+    error => addItem(error),
+    ()=> addItem('observer 1 complete')
+)
+subject.next('First thing from subject')
 
-var dateObserver = Observable.create((observer: any)=>{
-    counter = 0;
-    var intval = setInterval(()=>{
-        observer.next(new Date());
-        counter++;
-        if(counter>5)
-        clearInterval(intval);
-    }, 1000)
-    
-})
-var interval = (observer: any)=> setInterval(()=>{
-    observer.next(new Date());
-    counter++;
-}, 1000)
+var observer2 = subject.subscribe(
+    data=> addItem('observer 2: ' + data)
+)
 
-dateObserver.subscribe((x: any)=>{ addItem(x)})
+subject.next('Second thing from subject')
+subject.next('Third thing from subject')
 
-setTimeout(()=>{dateObserver.unsubscribe()}, 10000)
 
-function addItem(val: any){
-    var node = document.createElement('li');
-    node.className = 'col-md-4';
+function addItem(val: any) {
+    var node = document.createElement("li");
+    node.className = "col-md-4";
     var textnode = document.createTextNode(val);
     node.appendChild(textnode);
-    document.getElementById('output').appendChild(node);
+    document.getElementById("output").appendChild(node);
 }
-function addDate(val: any){
-    var node = document.createElement('li');
-    node.className = 'col-md-4';
+function addDate(val: any) {
+    var node = document.createElement("li");
+    node.className = "col-md-4";
     var textnode = document.createTextNode(val);
     node.appendChild(textnode);
-    document.getElementById('output').appendChild(node);
+    document.getElementById("output").appendChild(node);
 }
 
 // let button = document.getElementById('btnButton');
