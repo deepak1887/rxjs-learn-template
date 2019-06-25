@@ -1,20 +1,28 @@
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import * as data from '../server/data';
 
 var subject = new Subject();
+data.allBooks.forEach(book=>{ 
+    subject.next(book.title);
+})
 
-subject.subscribe(
-    data => addItem('observer 1: ' + data),
-    error => addItem(error),
-    ()=> addItem('observer 1 complete')
-)
-subject.next('First thing from subject')
+var observer1 = Observable.create((observer: any)=>{
+    observer.next('Hello Deepak !!')
+})
 
-var observer2 = subject.subscribe(
-    data=> addItem('observer 2: ' + data)
-)
+// subject.subscribe(
+//     data => addItem('observer 1: ' + data),
+//     error => addItem(error),
+//     ()=> addItem('observer 1 complete')
+// )
+// subject.next('First thing from subject')
 
-subject.next('Second thing from subject')
-subject.next('Third thing from subject')
+// var observer2 = subject.subscribe(
+//     data=> addItem('observer 2: ' + data)
+// )
+
+// subject.next('Second thing from subject')
+// subject.next('Third thing from subject')
 
 
 function addItem(val: any) {
