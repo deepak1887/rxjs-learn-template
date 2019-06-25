@@ -6,23 +6,29 @@ data.allBooks.forEach(book=>{
     subject.next(book.title);
 })
 
-var observer1 = Observable.create((observer: any)=>{
-    observer.next('Hello Deepak !!')
-})
+var observable = Observable.create((observer: any)=>{
+    try{
+        observer.next('Hey guys !!');
+        observer.next('Hey next guys !!');
+        let interval = 0;
+        var intervalFunction = setInterval(()=>{
+            observer.next(`interval ${interval} in second`);
+            interval+= 2;
+            // if(interval > 10)
+            // clearInterval(intervalFunction);
+        }, 2000);
+        //intervalFunction;
 
-// subject.subscribe(
-//     data => addItem('observer 1: ' + data),
-//     error => addItem(error),
-//     ()=> addItem('observer 1 complete')
-// )
-// subject.next('First thing from subject')
+    }
+    catch(err){
+        observer.error(err)
+    }
+});
 
-// var observer2 = subject.subscribe(
-//     data=> addItem('observer 2: ' + data)
-// )
-
-// subject.next('Second thing from subject')
-// subject.next('Third thing from subject')
+var observer = observable.subscribe((x: any)=>{ addItem(x)});
+setTimeout(() => {
+    observer.unsubscribe();
+}, 6500);
 
 
 function addItem(val: any) {
