@@ -1,5 +1,10 @@
-import { Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import * as data from '../server/data';
 
+var subject = new Subject();
+data.allBooks.forEach(book=>{ 
+    subject.next(book.title);
+})
 
 var observable = Observable.create((observer: any)=>{
     try{
@@ -25,10 +30,24 @@ setTimeout(() => {
     observer.unsubscribe();
 }, 6500);
 
-function addItem(val: any){
-    var node = document.createElement('li');
+
+function addItem(val: any) {
+    var node = document.createElement("li");
+    node.className = "col-md-4";
     var textnode = document.createTextNode(val);
     node.appendChild(textnode);
-    document.getElementById('output').appendChild(node);
+    document.getElementById("output").appendChild(node);
 }
+function addDate(val: any) {
+    var node = document.createElement("li");
+    node.className = "col-md-4";
+    var textnode = document.createTextNode(val);
+    node.appendChild(textnode);
+    document.getElementById("output").appendChild(node);
+}
+
+// let button = document.getElementById('btnButton');
+// fromEvent(button, 'click').subscribe(
+//     event=>{addItem(event)}
+// )
 //designcourse tutorial
